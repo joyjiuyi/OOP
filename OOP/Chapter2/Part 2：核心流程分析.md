@@ -253,11 +253,13 @@ protected final void processRequest(HttpServletRequest request, HttpServletRespo
 
 ![(doDispatch_time_diagram)](https://github.com/joyjiuyi/OOP/raw/main/OOP/Chapter2/doDispatch_time_diagram.png)
 
+<br/><br/>
+
 ### （二）doDispatch的整体流程概览
 
 #### <u>1、！！面向对象思想</u>
 
-&emsp;&emsp;doDispatch()方法，是SpringMVC整个框架的精华所在。它通过高度抽象的接口，描述出了一个MVC（Model-View-Controller）设计模式的实现方案。***Model、View、Controller***三种层次的编程元素，在SpringMVC中都有大量的实现类，各种处理细节也是千差万别。但是，它们最后都是由doDispatch()方法来统一描述，这就是***接口和抽象***的威力;
+&emsp;&emsp;doDispatch()方法，是SpringMVC整个框架的精华所在。它通过高度抽象的接口，描述出了一个MVC（Model-View-Controller）设计模式的实现方案。***Model、View、Controller***三种层次的编程元素，在SpringMVC中都有大量的实现类，各种处理细节也是千差万别。但是，它们最后都是由doDispatch()方法来统一描述，这就是***接口和抽象***的威力;<br/><br/>
 
 #### 2、doDispatch方法本身的源码分析
 
@@ -338,7 +340,7 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
     								……
 ```
 
-下面我们结合核心组件来分析核心流程：<br/>
+下面我们结合核心组件来分析核心流程：<br/><br/>
 
 ### （三）doDispatch结合组件的具体核心流程分析(标号对应源码中注释的标号)
 
@@ -391,7 +393,7 @@ public final HandlerExecutionChain getHandler(HttpServletRequest request) throws
 }
 ```
 
-######  <2.1>this.getHandlerInternal：
+######  &emsp;&emsp;<2.1>this.getHandlerInternal：
 
 &emsp;&emsp;根据request的url得到相应的handler，此handler为HandlerMethod的实例，这一步的关键函数为getHandlerInternal，getHandlerInternal函数就是要在Map中寻找HandlerMethod方法，而Map中保存的是<url,HhandlerMethod>，在容器初始化的时候会建立所有url和controller的对应关系保存到Map，我们来看一下getHandlerInternal函数的关键部分：
 
@@ -410,23 +412,23 @@ protected HandlerMethod getHandlerInternal(HttpServletRequest request) throws Ex
 	}
 ```
 
-######  <2.2>实例化HandlerExecutionChain对象并得到Interceptors
+######  &emsp;&emsp;<2.2>实例化HandlerExecutionChain对象并得到Interceptors
 
 &emsp;&emsp;根据第一步的HandlerMethod参数，利用getHandlerExecutionChain函数实例化一个HandlerExecutionChain对象，得到Interceptors，这个函数主要就是用于获得拦截器，这里我们不展开分析。
 
 ##### <3> 有关HandlerMapping组件
 
-###### A. 组件功能
+###### &emsp;&emsp;A. 组件功能
 
 &emsp;&emsp;HandlerMapping组件是处理器匹配接口，**它根据请求获得请求对应的处理器(Handler)和拦截器们(Interceptors)**，HandlerExecutionChain是其返回对象，包含了上面处理器和拦截器们。
 
-###### B. 组件类图
+###### &emsp;&emsp;B. 组件类图
 
 下面是HandlerMapping的整体类图：
 
 ![(HandlerMapping_url)](https://github.com/joyjiuyi/OOP/raw/main/OOP/Chapter2/HandlerMapping_url.jpg)
 
-###### C. 组件子类分析
+###### &emsp;&emsp;C. 组件子类分析
 
 &emsp;&emsp;首先是**AbstractHandlerMapping抽象子类**，其实现了获得请求对应的处理器和拦截器们的骨架逻辑，即实现了HandlerMapping接口中的getHandler()方法，而具体的抽象方法getHandlerInternal暴露，交由子类去实现，这里也就涉及到了**<u>面向对象的高级设计意图“模板方法模式</u>”**，我们将会在Part 3中进行解析；
 
@@ -436,7 +438,7 @@ AbstractHandlerMapping的子类分为2类：
 
 &emsp;II. *AbstractHandlerMethodMapping*：基于Method进行匹配，如RequestMapping的方式；
 
-然后是**MatchableHandlerMethodMapping子类**，是判断请求和指定pattern路径是否匹配的接口方法；<br/>
+然后是**MatchableHandlerMethodMapping子类**，是判断请求和指定pattern路径是否匹配的接口方法；<br/><br/>
 
 #### ！(2)获得HandlerAdapter对象
 
@@ -465,17 +467,17 @@ protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletExcepti
 
 ##### <2> 有关HandlerAdapter组件
 
-###### A. 组件的功能
+###### &emsp;&emsp;A. 组件的功能
 
 &emsp;&emsp;HandlerAdapter组件是处理器适配接口，处理器Handler是Object类型，需要有一个调用者来实现handler的执行，这也就引出了HandlerAdapter组件。
 
-###### B. 组件类图
+###### &emsp;&emsp;B. 组件类图
 
 下面是HandlerAdapter的类图：
 
 ![(HandlerAdapter_url)](https://github.com/joyjiuyi/OOP/raw/main/OOP/Chapter2/HandlerAdapter_url.png)
 
-###### C. 组件子类分析
+###### &emsp;&emsp;C. 组件子类分析
 
 &emsp;&emsp;由于我们的重点在于分析Spring MVC的核心流程，所以这里我们不展开分析HanlerAdapter的这些子类，只是简要介绍一下它们之间的交互关系：
 
@@ -483,7 +485,7 @@ protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletExcepti
 
 **AbstractHandlerMethodAdapter子类**对应HandlerMapping组件中的AbstractHandlerMethodMapping子类；
 
-**RequestMappingHandlerAdapter子类**对应HandlerMapping组件中的RequestMappingHandlerMapping子类，是最复杂也是最常用到的一个Adapter；<br/>
+**RequestMappingHandlerAdapter子类**对应HandlerMapping组件中的RequestMappingHandlerMapping子类，是最复杂也是最常用到的一个Adapter；<br/><br/>
 
 #### ！(3)前置处理：执行所有注册拦截器的preHandler方法
 
@@ -507,7 +509,7 @@ boolean applyPreHandle(HttpServletRequest request, HttpServletResponse response)
 
 &emsp;&emsp;该函数会调用所有注册拦截器的preHandler方法，如果preHandler方法返回结果为true，则继续运行，否则会调用triggerAfterCopletion方法，该方法会调用所有已经成功执行的拦截器的afterCompletion方法并返回false，则doDiapatcher就不会继续执行下去了，会执行拦截器的afterCompletion方法；
 
-&emsp;&emsp;**从这里我们可以看出，只有所有注册的拦截器都执行成功，Spring MVC 的核心流程才会继续进行下去。**
+&emsp;&emsp;**从这里我们可以看出，只有所有注册的拦截器都执行成功，Spring MVC 的核心流程才会继续进行下去。**<br/><br/>
 
 #### ！(4)真正开始执行用于处理的handler
 
@@ -572,7 +574,9 @@ A. 创建视图容器，用于封装视图、数据模型和处理状态等信�
 
 B. 调用invokeAndHandle()方法执行对应的处理器handler；
 
-C. 封装ModelAndView实例并返回。
+C. 封装ModelAndView实例并返回。<br/>
+
+<br/>
 
 #### ！(5)调用所有拦截器的postHandle方法
 
@@ -586,7 +590,9 @@ void applyPostHandle(HttpServletRequest request, HttpServletResponse response, @
 }
 ```
 
-&emsp;&emsp;在HandlerExecutionChain类中执行，先从interceptorIndex这个索引开始向前遍历拦截器，然后执行postHandle方法；
+&emsp;&emsp;在HandlerExecutionChain类中执行，先从interceptorIndex这个索引开始向前遍历拦截器，然后执行postHandle方法；<br/>
+
+<br/>
 
 #### ！(6)处理视图，进行页面渲染
 
@@ -639,6 +645,8 @@ protected void render(ModelAndView mv, HttpServletRequest request, HttpServletRe
 	}
 }
 ```
+
+<br/><br/>
 
 #### ！(7)拦截器收尾
 
