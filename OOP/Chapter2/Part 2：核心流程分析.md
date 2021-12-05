@@ -14,7 +14,7 @@
 
 ------
 
-
+<br/><br/>
 
 ## 一、从不同的HttpMethod的请求处理说起
 
@@ -22,7 +22,7 @@
 
 &emsp;&emsp;在Part 1中，我们只是从调用关系的角度简要的分析了一下请求处理所用到的函数，在这一Part中，我们将会详细的分析关键的请求处理函数的实现，并在这个过程中对Spring MVC的核心流程和核心组件的类间交互关系进行建模。<br/>
 
-&emsp;&emsp;**进入“Service”阶段后，每一次Http请求到来，容器都会启动一个请求线程，通过service方法，委派doxxxx方法完成请求的处理，下面我们就从Servlet的核心service方法开始对Spring MVC的核心流程进行源码分析；**<br/>
+&emsp;&emsp;**进入“Service”阶段后，每一次Http请求到来，容器都会启动一个请求线程，通过service方法，委派doxxxx方法完成请求的处理，下面我们就从Servlet的核心service方法开始对Spring MVC的核心流程进行源码分析；**<br/><br/>
 
 ### （一）Servlet的核心：service()方法
 
@@ -47,15 +47,15 @@ protected void service(HttpServletRequest request, HttpServletResponse response)
 
 &emsp;&emsp;<u>**对应图上标号进行源码分析(后面的源码分析也是同样的形式)**：</u>
 
-&emsp;&emsp;**(1)**获得请求方法；
+&emsp;&emsp;(1)获得请求方法；
 
-&emsp;&emsp;**(2.1)**如果请求方法是PATCH，则调用processRequest()方法进行处理；
+&emsp;&emsp;(2.1)如果请求方法是PATCH，则调用processRequest()方法进行处理；
 
-&emsp;&emsp;**(2.2)**其他请求的处理方法则要调用FrameworkServlet的父类HttpServlet中的service函数进行实现，而父类HttpServlet中的service()方法会调用doxxx方法进行请求处理；
+&emsp;&emsp;(2.2)其他请求的处理方法则要调用FrameworkServlet的父类HttpServlet中的service函数进行实现，而父类HttpServlet中的service()方法会调用doxxx方法进行请求处理；<br/>
 
 #### <u>**！！面向对象的思想：**</u>
 
-&emsp;&emsp;**这里体现了由Servlet发展到DispatcherServlet中 *框架* 的作用，直接在servlet-class标签中写上DispatcherServlet即可，不需要自己再重写HttpServlet中的方法，即把一些通用的操作封装起来不需要开发人员自己再去实现。**<br/>
+&emsp;&emsp;**这里体现了由Servlet发展到DispatcherServlet中 *框架* 的作用，直接在servlet-class标签中写上DispatcherServlet即可，不需要自己再重写HttpServlet中的方法，即把一些通用的操作封装起来不需要开发人员自己再去实现。**<br/><br/>
 
 ### （二）FrameworkServlet中doxxx方法的重写
 
@@ -106,13 +106,13 @@ protected void doOptions(HttpServletRequest request, HttpServletResponse respons
 
 ##### <2>源码分析
 
-**(1)**dispatchOptionsRequest初始化为false，此时如果dispatchOptionsRequest为true，则开始处理请求；
+(1)dispatchOptionsRequest初始化为false，此时如果dispatchOptionsRequest为true，则开始处理请求；
 
-**(2)**调用processRequest方法处理请求；
+(2)调用processRequest方法处理请求；
 
-**(3)**如果响应Header中包含“Allow”，则不需要调用父类方法，直接返回；
+(3)如果响应Header中包含“Allow”，则不需要调用父类方法，直接返回；
 
-**(4)**调用父类方法，在响应Header的"Allow"增加PATCH的值；
+(4)调用父类方法，在响应Header的"Allow"增加PATCH的值；
 
 #### 3、doTrace
 
