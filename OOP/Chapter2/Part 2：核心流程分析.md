@@ -249,7 +249,7 @@ doDispatch方法用于执行请求的分发，也是实际处理请求的方法�
 
 首先放一下doDispatch的时序分析图，下面结合这个时序分析图进行核心流程的分析更加有利于理解：
 
-
+![(doDispatch_time_diagram)](https://github.com/joyjiuyi/OOP/raw/main/OOP/Chapter2/doDispatch_time_diagram.png)
 
 ### （二）doDispatch的整体流程概览
 
@@ -422,7 +422,7 @@ HandlerMapping组件是处理器匹配接口，**它根据请求获得请求对�
 
 下面是HandlerMapping的整体类图：
 
-
+![(HandlerMapping_url)](https://github.com/joyjiuyi/OOP/raw/main/OOP/Chapter2/HandlerMapping_url.jpg)
 
 ###### C. 组件子类分析
 
@@ -471,7 +471,7 @@ HandlerAdapter组件是处理器适配接口，处理器Handler是Object类型�
 
 下面是HandlerAdapter的类图：
 
-
+![(HandlerAdapter_url)](https://github.com/joyjiuyi/OOP/raw/main/OOP/Chapter2/HandlerAdapter_url.png)
 
 ###### C. 组件子类分析
 
