@@ -6,7 +6,9 @@
 
 ## Part 2目录：
 
+![(content_1)](https://github.com/joyjiuyi/OOP/raw/main/OOP/Chapter2/content_1.png) 
 
+![(content_2)](https://github.com/joyjiuyi/OOP/raw/main/OOP/Chapter2/content_2.png) 
 
 
 
