@@ -10,7 +10,7 @@
 
 ![(content_2)](https://github.com/joyjiuyi/OOP/raw/main/OOP/Chapter2/content_2.png) 
 
-
+<br/><br/>
 
 ------
 
@@ -118,7 +118,7 @@ protected void doOptions(HttpServletRequest request, HttpServletResponse respons
 
 &emsp;&emsp;doTrace方法用于激发一个远程的、应用层的请求消息回路，即一个请求响应回路；
 
-&emsp;&emsp;此方法的实现思路与doOptions方法大体相似，核心均是调用processRequest方法进行请求处理；
+&emsp;&emsp;此方法的实现思路与doOptions方法大体相似，核心均是调用processRequest方法进行请求处理；<br/><br/>
 
 ### （三）processRequest方法
 
@@ -174,15 +174,15 @@ protected final void processRequest(HttpServletRequest request, HttpServletRespo
 }
 ```
 
-**(1)**获取系统当前的时间戳，用于计算web请求的处理时间；
+(1)获取系统当前的时间戳，用于计算web请求的处理时间；
 
-**(2)**记录一个异常顶层对象Throwable；
+(2)记录一个异常顶层对象Throwable；
 
-**(3)**进行本土化处理，在这里需要获取上一个LocaleContext并且构建一个本土的上下文；
+(3)进行本土化处理，在这里需要获取上一个LocaleContext并且构建一个本土的上下文；
 
-**(4)(5)**获取当前绑定到线程的RequestAttributes并构建ServletRequestAttributes；
+(4)(5)获取当前绑定到线程的RequestAttributes并构建ServletRequestAttributes；
 
-**(6)**将localeContext和requestAttributes放入当前线程中<br/>
+(6)将localeContext和requestAttributes放入当前线程中<br/>
 
 **<u>(7)进入doService方法，这是真正处理请求的核心，它在DispatcherServlet中实现，在下一个模块中我们会单独拿出来分析；</u>**<br/>
 
@@ -196,7 +196,7 @@ protected final void processRequest(HttpServletRequest request, HttpServletRespo
 
 &emsp;&emsp;**processRequest方法理解的要点是(面向对象的思想）**：*以<u>**doService()**</u>方法为间隔*，前边的6步是将当前请求的Locale对象和属性，分别设置到LocaleContextHolder和RequestContextHolder这两个抽象类的ThreadLocal中，即将Locale队形和属性与请求线程做了绑定；在doService()处理结束之后，后面用于恢复请求前的LocaleContextHolder和RequestContextHolder，即解除线程绑定。而每次请求处理结束后，容器的上下文都会发布一个ServletRequestHandledEvent时间，可以用监听器来监听该事件。
 
-&emsp;&emsp;**processRequest功能作用**：做线程的安全隔离，将请求处理的核心转移到doService()方法中。
+&emsp;&emsp;**processRequest功能作用**：做线程的安全隔离，将请求处理的核心转移到doService()方法中。<br/><br/>
 
 ### （四）doService
 
@@ -235,15 +235,15 @@ protected final void processRequest(HttpServletRequest request, HttpServletRespo
 }
 ```
 
-&emsp;&emsp;**Spring MVC不将请求处理过程与Web容器完全隔离**，这里的request.setAttribute方法的调用将实例化的对象设置到http请求的属性中以供下一步使用，比如容器的上下文对象、本地化解析器、主题解析器等编程元素。
+&emsp;&emsp;**Spring MVC不将请求处理过程与Web容器完全隔离**，这里的request.setAttribute方法的调用将实例化的对象设置到http请求的属性中以供下一步使用，比如容器的上下文对象、本地化解析器、主题解析器等编程元素。<br/><br/>
 
 ### （五）最重要！！！：doDispatch
 
-&emsp;&emsp;doDispatch方法用于执行请求的分发，也是实际处理请求的方法，从这里开始，我们也就真正进入到了Spring MVC框架中的最核心的流程部分，在这部分中，我们会涉及到核心流程中的类间关系以及核心组件内部类间关系的建模，于是我们开启一个新的篇章。<br/>
+&emsp;&emsp;doDispatch方法用于执行请求的分发，也是实际处理请求的方法，从这里开始，我们也就真正进入到了Spring MVC框架中的最核心的流程部分，在这部分中，我们会涉及到核心流程中的类间关系以及核心组件内部类间关系的建模，于是我们开启一个新的篇章。<br/><br/>
 
 ------
 
-
+<br/><br/>
 
 ## 二、最重要！！！：doDispatch：进入最核心的流程
 
@@ -658,7 +658,7 @@ void triggerAfterCompletion(HttpServletRequest request, HttpServletResponse resp
 
 &emsp;&emsp;同样在HandlerExecutionChain类中执行，不论是捕获了异常或者错误，还是正常的渲染结束，都会调用拦截器的afterCompletion方法，这里的执行顺序与拦截器的postHandle方法一样。
 
-
+<br/><br/>
 
 **参考文献：**
 
