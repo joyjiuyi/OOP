@@ -18,7 +18,7 @@
 
 ## 一、从不同的HttpMethod的请求处理说起
 
-由Part 1，我们从Spring MVC的核心工作流程中可知客户端向浏览器发送的请求会首先被DispatcherServlet捕获；实际上，**service()方法是Serlvet框架的核心**，用于应答浏览器的请求，而这个方法是在DispatcherServlet的父类FrameworkServlet中实现的；除此之外，不同HttpMethod的请求处理方法doxxx也是在FrameworkServlet中实现的，故在DispatcherServlet的继承关系中，**FrameworkServlet才是真正的请求处理的入口**；<br/>
+&emsp;&emsp;由Part 1，我们从Spring MVC的核心工作流程中可知客户端向浏览器发送的请求会首先被DispatcherServlet捕获；实际上，**service()方法是Serlvet框架的核心**，用于应答浏览器的请求，而这个方法是在DispatcherServlet的父类FrameworkServlet中实现的；除此之外，不同HttpMethod的请求处理方法doxxx也是在FrameworkServlet中实现的，故在DispatcherServlet的继承关系中，**FrameworkServlet才是真正的请求处理的入口**；<br/>
 
 在Part 1中，我们只是从调用关系的角度简要的分析了一下请求处理所用到的函数，在这一Part中，我们将会详细的分析关键的请求处理函数的实现，并在这个过程中对Spring MVC的核心流程和核心组件的类间交互关系进行建模。<br/>
 
